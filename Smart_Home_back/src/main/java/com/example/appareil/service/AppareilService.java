@@ -21,6 +21,9 @@ public class AppareilService {
     private CategorieRepository categorieRepository;
 
     public Appareil save(Appareil appareil) {
+        if (appareil.getCategorie() == null || appareil.getCategorie().getId() == null) {
+            throw new RuntimeException("Category is required.");
+        }
         Optional<Categorie> categorie = categorieRepository.findById(appareil.getCategorie().getId());
         if (categorie.isEmpty()) {
             throw new RuntimeException("Category not found.");
